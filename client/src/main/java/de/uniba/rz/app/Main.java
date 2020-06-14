@@ -1,5 +1,8 @@
 package de.uniba.rz.app;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
 import de.uniba.rz.ui.swing.MainFrame;
 import de.uniba.rz.ui.swing.SwingMainController;
 import de.uniba.rz.ui.swing.SwingMainModel;
@@ -24,8 +27,10 @@ public class Main {
 	 * </p>
 	 * 
 	 * @param args
+	 * @throws TimeoutException 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, TimeoutException {
 		TicketManagementBackend backendToUse = evaluateArgs(args);
 
 		SwingMainController control = new SwingMainController(backendToUse);
@@ -34,7 +39,8 @@ public class Main {
 
 		control.setMainFrame(mf);
 		control.setSwingMainModel(model);
-
+		Consumer getmsg= new Consumer();
+		getmsg.MQconnectionReceiveMessage();
 		control.start();
 	}
 
