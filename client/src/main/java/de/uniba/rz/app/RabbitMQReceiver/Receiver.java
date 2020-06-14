@@ -25,7 +25,7 @@ public class Receiver {
         factory.setHost("localhost");
         Connection connection = factory.newConnection(); 
         Channel channel = connection.createChannel();
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null); //if you start consumer before sender, then u wont have any queues so you can just leave this here 
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null); 
         System.out.println(" !! Waiting for message");
             
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
