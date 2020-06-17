@@ -1,7 +1,6 @@
 package de.uniba.rz.app.RabbitMQSender;
 import com.rabbitmq.client.ConnectionFactory;
 
-import de.uniba.rz.app.RabbitMQReceiver.Receiver;
 
 import com.rabbitmq.client.Connection;
 
@@ -20,7 +19,7 @@ public class Sender {
 	private final static String QUEUE_NAME = "hello-world";
 	private static Connection connection;
 	
-	public static String main(String[] args) throws IOException, TimeoutException, InterruptedException {
+	public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
 		// TODO Auto-generated method stub
 		System.out.println("In sender MQConnection method");
 		ConnectionFactory factory = new ConnectionFactory();
@@ -55,18 +54,18 @@ public class Sender {
             String result = response.take();
             channel.basicCancel(ctag);
             System.out.println("get response sender method: "+result);
-            return result;
+            //return result;
            
         } catch (IOException e) {
 			// TODO Auto-generated catch block
         	System.out.println(e.getMessage());
 			e.printStackTrace();
-			return e.getMessage();
+			//return e.getMessage();
 		} catch (TimeoutException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			return e.getMessage();
+			//return e.getMessage();
 		}
 	}
 	public void close() throws IOException {
