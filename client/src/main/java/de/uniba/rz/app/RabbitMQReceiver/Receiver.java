@@ -9,6 +9,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
+import de.uniba.rz.app.RabbitMQSender.Sender;
+
 public class Receiver {
 	
 	private final static String QUEUE_NAME = "hello-world";
@@ -63,7 +65,8 @@ public class Receiver {
                 }
             }
         }
-            
+          
+            		
         
 	}
 
