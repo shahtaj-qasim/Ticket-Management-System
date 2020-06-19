@@ -1,6 +1,7 @@
 package de.uniba.rz.app.RabbitMQSender;
 import com.rabbitmq.client.ConnectionFactory;
 
+import de.uniba.rz.app.RabbitMQReceiver.Receiver;
 
 import com.rabbitmq.client.Connection;
 
@@ -19,7 +20,11 @@ public class Sender {
 	private final static String QUEUE_NAME = "hello-world";
 	private static Connection connection;
 	
+<<<<<<< HEAD
 	public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
+=======
+	public static String main(String[] args) throws IOException, TimeoutException, InterruptedException {
+>>>>>>> fba3c438df125fbd3741d580ead24be2b8c91ee0
 		// TODO Auto-generated method stub
 		System.out.println("In sender MQConnection method");
 		ConnectionFactory factory = new ConnectionFactory();
@@ -54,18 +59,30 @@ public class Sender {
             String result = response.take();
             channel.basicCancel(ctag);
             System.out.println("get response sender method: "+result);
+<<<<<<< HEAD
             //return result;
+=======
+            return result;
+>>>>>>> fba3c438df125fbd3741d580ead24be2b8c91ee0
            
         } catch (IOException e) {
 			// TODO Auto-generated catch block
         	System.out.println(e.getMessage());
 			e.printStackTrace();
+<<<<<<< HEAD
 			//return e.getMessage();
+=======
+			return e.getMessage();
+>>>>>>> fba3c438df125fbd3741d580ead24be2b8c91ee0
 		} catch (TimeoutException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+<<<<<<< HEAD
 			//return e.getMessage();
+=======
+			return e.getMessage();
+>>>>>>> fba3c438df125fbd3741d580ead24be2b8c91ee0
 		}
 	}
 	public void close() throws IOException {

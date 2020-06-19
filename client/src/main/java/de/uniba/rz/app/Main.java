@@ -3,6 +3,8 @@ package de.uniba.rz.app;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import de.uniba.rz.app.RabbitmqConfiguration.Receiver;
+import de.uniba.rz.app.RabbitmqConfiguration.RabbitMqConfiguration;
 import de.uniba.rz.ui.swing.MainFrame;
 import de.uniba.rz.ui.swing.SwingMainController;
 import de.uniba.rz.ui.swing.SwingMainModel;
@@ -29,8 +31,9 @@ public class Main {
 	 * @param args
 	 * @throws TimeoutException 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException, TimeoutException {
+	public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
 		TicketManagementBackend backendToUse = evaluateArgs(args);
 
 		SwingMainController control = new SwingMainController(backendToUse);
@@ -39,9 +42,12 @@ public class Main {
 
 		control.setMainFrame(mf);
 		control.setSwingMainModel(model);
-		Consumer getmsg= new Consumer();
-		getmsg.MQconnectionReceiveMessage();
+		
+		
 		control.start();
+		RabbitMqConfiguration.createQueue();
+
+		Receiver.ReceiverMethod(null);
 	}
 
 	/**

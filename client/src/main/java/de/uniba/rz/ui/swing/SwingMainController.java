@@ -3,6 +3,7 @@ package de.uniba.rz.ui.swing;
 import java.util.List;
 
 import de.uniba.rz.app.Shutdown;
+import de.uniba.rz.app.RabbitmqConfiguration.Sender;
 import de.uniba.rz.entities.Priority;
 import de.uniba.rz.entities.Ticket;
 import de.uniba.rz.entities.TicketException;
@@ -50,7 +51,9 @@ public class SwingMainController {
 	public void acceptTicket(int id) {
 		try {
 			model.acceptTicket(id);
-			mainFrame.showTicketDetails(model.getTicket(id));
+			Ticket ticket = model.getTicket(id);
+			mainFrame.showTicketDetails(ticket);
+			Sender.SenderMethod(ticket, "update");
 		} catch (TicketException exec) {
 			mainFrame.showErrorDialog("Invalid status change.", exec);
 		}
@@ -59,7 +62,9 @@ public class SwingMainController {
 	public void closeTicket(int id) {
 		try {
 			model.closeTicket(id);
-			mainFrame.showTicketDetails(model.getTicket(id));
+			Ticket ticket = model.getTicket(id);
+			mainFrame.showTicketDetails(ticket);
+			Sender.SenderMethod(ticket, "update");
 		} catch (TicketException e) {
 			mainFrame.showErrorDialog("Invalid status change.", e);
 		}
@@ -68,7 +73,9 @@ public class SwingMainController {
 	public void rejectTicket(int id) {
 		try {
 			model.rejectTicket(id);
-			mainFrame.showTicketDetails(model.getTicket(id));
+			Ticket ticket = model.getTicket(id);
+			mainFrame.showTicketDetails(ticket);
+			Sender.SenderMethod(ticket, "update");
 		} catch (TicketException e) {
 			mainFrame.showErrorDialog("Invalid status change", e);
 		}
@@ -77,7 +84,9 @@ public class SwingMainController {
 	public void createNewTicket(String reporter, String topic, String description, Type type, Priority priority) {
 		try {
 			Ticket ticket = model.createNewTicket(reporter, topic, description, type, priority);
+			Sender.SenderMethod(ticket, "create");
 			mainFrame.showTicketDetails(ticket);
+			
 		} catch (TicketException e) {
 			mainFrame.showErrorDialog("Invalid status change", e);
 		}

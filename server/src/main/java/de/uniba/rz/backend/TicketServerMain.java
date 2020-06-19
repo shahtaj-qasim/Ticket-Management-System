@@ -16,10 +16,12 @@ public class TicketServerMain {
 		List<RemoteAccess> remoteAccessImplementations = getAvailableRemoteAccessImplementations(args);
 
 		// Starting remote access implementations:
-		for (RemoteAccess implementation : remoteAccessImplementations) {
-			implementation.prepareStartup(simpleTestStore);
-			new Thread(implementation).start();
-		}
+		// Starting remote access implementations:
+//		for (RemoteAccess implementation : remoteAccessImplementations) {
+			//implementation.prepareStartup(
+		new RabbitMQTicketStore().run(); //);
+//			new Thread(implementation).start();
+//		}
 
 		try (BufferedReader shutdownReader = new BufferedReader(new InputStreamReader(System.in))) {
 			System.out.println("Press enter to shutdown system.");
