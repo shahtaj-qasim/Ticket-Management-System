@@ -33,16 +33,12 @@ public class Receiver {
 						.correlationId(delivery.getProperties().getCorrelationId())
 						.build();
 
-
-
 					// RabbitMq consumer worker thread notifies the RPC server owner thread
 					synchronized (monitor) {
 						monitor.notify();
 					}
 
 			};
-
-			//channel.basicConsume(RECEIVING_QUEUE, false, deliverCallback, (consumerTag -> { }));
 
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override

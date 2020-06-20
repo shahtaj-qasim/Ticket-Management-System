@@ -45,7 +45,7 @@ public class RabbitMQTicketStore implements RemoteAccess {
                     String message = new String(delivery.getBody(), "UTF-8");
                     if (!message.isEmpty()) {
                         System.out.println(" Server: '" + message + "");
-                        //System.out.println(" Server: '" + response + "");
+                        System.out.println(" Sending server response: '" + response + "");
 
                         channel.basicPublish("", delivery.getProperties().getReplyTo(), replyProps, response.getBytes("UTF-8"));
                         channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);

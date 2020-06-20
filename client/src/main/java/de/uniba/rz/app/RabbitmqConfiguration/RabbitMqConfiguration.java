@@ -10,6 +10,7 @@ public class RabbitMqConfiguration {
     public final static String RECEIVING_QUEUE = "receivingQueue";
     public final static String EXCHANGE_NAME = "fanountExchange";
 
+
     public static Channel createQueue() {
 
         try {
@@ -17,7 +18,7 @@ public class RabbitMqConfiguration {
             Channel channel = conn.createChannel();
             channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
             channel.queueDeclare(SENDING_QUEUE, false, false, false, null);
-            //channel.queueBind(SENDING_QUEUE, EXCHANGE_NAME, "");
+
             channel.queueDeclare(RECEIVING_QUEUE, false, false, false, null);
             channel.queueBind(RECEIVING_QUEUE, EXCHANGE_NAME, "");
 

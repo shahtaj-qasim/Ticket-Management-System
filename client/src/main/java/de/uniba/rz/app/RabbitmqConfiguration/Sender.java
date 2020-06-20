@@ -30,13 +30,13 @@ public class Sender {
             if(method == "create") {
                 String message = "You just created a ticket! Check ticket in Server! " + LocalDateTime.now();
                 channel.basicPublish("", SENDING_QUEUE, props, ticket.toString().getBytes("UTF-8"));
-                //channel.basicPublish( EXCHANGE_NAME, "", props, ticket.toString().getBytes());
+
                 System.out.println(" !!! Message from client:  '" + message + "'");
             }
             if(method == "update") {
                 String message = "You just updated a ticket! Check ticket in Server! " + LocalDateTime.now();
                 channel.basicPublish("", SENDING_QUEUE, props, ticket.toString().getBytes("UTF-8"));
-                //channel.basicPublish( EXCHANGE_NAME, "", props, ticket.toString().getBytes());
+
                 System.out.println(" !!! Message from client:  '" + message + "'");
             }
 
@@ -52,7 +52,7 @@ public class Sender {
             String result = response.take();
 
             channel.basicCancel(ctag);
-            channel.basicPublish( EXCHANGE_NAME, "", props, result.getBytes());
+            channel.basicPublish( EXCHANGE_NAME, "", props, result.getBytes()); //works
             System.out.println("!!! Received response in client:  '" + result + "'");
 
         } catch (Exception e) {
