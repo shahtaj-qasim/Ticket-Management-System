@@ -15,6 +15,9 @@ import static de.uniba.rz.app.RabbitmqConfiguration.RabbitMqConfiguration.EXCHAN
 import static de.uniba.rz.app.RabbitmqConfiguration.RabbitMqConfiguration.SENDING_QUEUE;
 
 public class Sender {
+
+    //Publishes message to the queue and consumes reply/response from the server
+    //Author: Shahtaj
     public static void SenderMethod(Ticket ticket, String method) {
 
         try {
@@ -27,6 +30,7 @@ public class Sender {
                     .correlationId(corrId)
                     .replyTo(callbackQueueName)
                     .build();
+            //edit by Waleeha
             if(method == "create") {
                 String message = "You just created a ticket! Check ticket in Server! " + LocalDateTime.now();
                 channel.basicPublish("", SENDING_QUEUE, props, ticket.toString().getBytes("UTF-8"));
@@ -40,6 +44,7 @@ public class Sender {
                 System.out.println(" !!! Message from client:  '" + message + "'");
             }
 
+            //for consuming reply/response from the server
             final BlockingQueue<String> response = new ArrayBlockingQueue<>(1);
 
             String ctag = channel.basicConsume(callbackQueueName, true, (consumerTag, delivery) -> {

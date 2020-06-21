@@ -17,6 +17,8 @@ import static de.uniba.rz.app.RabbitmqConfiguration.RabbitMqConfiguration.*;
 public class Receiver {
 	private static Channel channel = null;
 
+	//Receives messages from server and publishes to all clients
+	//Author: Shahtaj
 	public static void ReceiverMethod(String[] args) throws IOException, TimeoutException {
 
 
@@ -39,7 +41,7 @@ public class Receiver {
 					}
 
 			};
-
+			//edit by Waleeha
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {

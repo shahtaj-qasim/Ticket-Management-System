@@ -24,6 +24,7 @@ public class RabbitMQTicketStore implements RemoteAccess {
     @Override
     public void shutdown() {}
 
+    //Receives the tickets that are created/or updated by the clients, and sends reply to the clients
     @Override
     public void run() {
 
@@ -40,6 +41,7 @@ public class RabbitMQTicketStore implements RemoteAccess {
                         .Builder()
                         .correlationId(delivery.getProperties().getCorrelationId())
                         .build();
+
                 String response = "Server response!! Hey! a ticket is created or updated!!"+ LocalDateTime.now();
                 try {
                     String message = new String(delivery.getBody(), "UTF-8");

@@ -17,18 +17,17 @@ public class TicketServerMain {
 
 		// Starting remote access implementations:
 		// Starting remote access implementations:
-//		for (RemoteAccess implementation : remoteAccessImplementations) {
-			//implementation.prepareStartup(
-		new RabbitMQTicketStore().run(); //);
-//			new Thread(implementation).start();
-//		}
-
+		for (RemoteAccess implementation : remoteAccessImplementations) {
+			implementation.run();
+			new Thread(implementation).start();
+		}
+		//new RabbitMQTicketStore().run();
 		try (BufferedReader shutdownReader = new BufferedReader(new InputStreamReader(System.in))) {
 			System.out.println("Press enter to shutdown system.");
 			shutdownReader.readLine();
 			System.out.println("Shutting down...");
 	
-			// Shuttung down all remote access implementations
+			// Shutting down all remote access implementations
 			for (RemoteAccess implementation : remoteAccessImplementations) {
 				implementation.shutdown();
 			}
@@ -42,6 +41,7 @@ public class TicketServerMain {
 		// TODO Add your implementations of the RemoteAccess interface
 		// e.g.:
 		// implementations.add(new UdpRemoteAccess(args[0], args[1]));
+		implementations.add(new RabbitMQTicketStore());
 
 		return implementations;
 	}

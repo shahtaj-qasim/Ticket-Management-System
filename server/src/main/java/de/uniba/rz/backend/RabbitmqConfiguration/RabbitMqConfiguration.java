@@ -7,8 +7,8 @@ import com.rabbitmq.client.ConnectionFactory;
 public class RabbitMqConfiguration {
 
     public final static String SENDING_QUEUE = "sendingQueue";
-
-
+    //Creates queue, binds exchange to the queue
+    //edit by Waleeha
     public static Channel createQueue() {
 
         try {
@@ -23,6 +23,7 @@ public class RabbitMqConfiguration {
         }
     }
 
+    //sets properties (username, password, host, port etc) for connection
     public static Connection createConnection(){
         try {
             ConnectionFactory factory = new ConnectionFactory();

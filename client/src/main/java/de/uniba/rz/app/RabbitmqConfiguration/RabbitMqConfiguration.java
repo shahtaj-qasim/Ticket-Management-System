@@ -10,7 +10,8 @@ public class RabbitMqConfiguration {
     public final static String RECEIVING_QUEUE = "receivingQueue";
     public final static String EXCHANGE_NAME = "fanountExchange";
 
-
+    //Creates queue, binds exchange to the queue
+    //Author: Waleeha
     public static Channel createQueue() {
 
         try {
@@ -28,7 +29,7 @@ public class RabbitMqConfiguration {
             return null;
         }
     }
-
+    //sets properties (username, password, host, port etc) for connection
     public static Connection createConnection(){
         try {
             ConnectionFactory factory = new ConnectionFactory();
