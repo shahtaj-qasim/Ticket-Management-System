@@ -31,3 +31,8 @@ Look at the dependencies block in the server/build.gradle.
 
 The _shared_ project is automatically included in the dependencies of the client and server.
 If you are interested inspect the `idistrsys/build.gradle` to see all the relevant settings, configurations and tasks.
+
+### Note:
+
+For running UDP on client and server, go to Run -> Edit Configurations, pass argument "udp localhost 5672" for client. And pass argument "localhost 5672 udp" for server
+For running RabbitMQ on client and server, go to Run -> Edit Configurations, pass argument "rmq localhost 5672" for client. And pass argument "localhost 5672 rmq" for server
