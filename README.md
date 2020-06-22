@@ -34,5 +34,5 @@ If you are interested inspect the `idistrsys/build.gradle` to see all the releva
 
 ### Note:
 
-For running UDP on client and server, go to Run -> Edit Configurations, pass argument "udp localhost 5672" for client. And pass argument "localhost 5672 udp" for server
-For running RabbitMQ on client and server, go to Run -> Edit Configurations, pass argument "rmq localhost 5672" for client. And pass argument "localhost 5672 rmq" for server
+1. For running UDP on client and server, go to Run -> Edit Configurations, pass argument "udp localhost 5672" for client. And pass argument "localhost 5672 udp" for server
+2. For running RabbitMQ on client and server, go to Run -> Edit Configurations, pass argument "rmq localhost 5672" for client. And pass argument "localhost 5672 rmq" for server
