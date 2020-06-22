@@ -1,5 +1,7 @@
 package de.uniba.rz.backend;
 
+import java.io.IOException;
+
 /**
  * Basic interface to enable remote access to the {@link TicketStore} managing the tickets internally
  *

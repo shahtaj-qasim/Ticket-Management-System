@@ -1,75 +1,45 @@
 package de.uniba.rz.backend;
 
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.DeliverCallback;
-import de.uniba.rz.backend.RabbitmqConfiguration.RabbitMqConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.uniba.rz.entities.Priority;
+import de.uniba.rz.entities.Status;
+import de.uniba.rz.entities.Ticket;
+import de.uniba.rz.entities.Type;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+public class RabbitMQTicketStore implements TicketStore{
+    HashMap<Integer, Ticket> tickets = new HashMap<>();
+    private AtomicInteger ticketId;
 
-
-import static de.uniba.rz.backend.RabbitmqConfiguration.RabbitMqConfiguration.SENDING_QUEUE;
-
-public class RabbitMQTicketStore implements RemoteAccess {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQTicketStore.class);
-    private static Channel channel;
+    public RabbitMQTicketStore() {
+        ticketId = new AtomicInteger(1);
+    }
+    @Override
+    public Ticket storeNewTicket(String reporter, String topic, String description, Type type, Priority priority) {
+        Ticket newTicket = new Ticket(ticketId.getAndIncrement(), reporter, topic, description, type, priority);
+        tickets.put(newTicket.getId(), newTicket);
+        //System.out.println("Created new Ticket from Reporter: " + reporter + " with the topic \"" + topic + "\"");
+        System.out.println(newTicket.toString());
+        return (Ticket) newTicket.clone();
+    }
 
     @Override
-    public void prepareStartup(TicketStore ticketStore) { }
-
-    @Override
-    public void shutdown() {}
-
-    //Receives the tickets that are created/or updated by the clients, and sends reply to the clients
-    @Override
-    public void run() {
-
-        LOGGER.warn("Logging is working on server side");
-        try {
-            channel = RabbitMqConfiguration.createQueue();
-
-
-            System.out.println(" !! Waiting for message");
-
-            Object monitor = new Object();
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                AMQP.BasicProperties replyProps = new AMQP.BasicProperties
-                        .Builder()
-                        .correlationId(delivery.getProperties().getCorrelationId())
-                        .build();
-
-                String response = "Server response!! Hey! a ticket is created or updated!!"+ LocalDateTime.now();
-                try {
-                    String message = new String(delivery.getBody(), "UTF-8");
-                    if (!message.isEmpty()) {
-                        System.out.println(" Server: '" + message + "");
-                        System.out.println(" Sending server response: '" + response + "");
-
-                        channel.basicPublish("", delivery.getProperties().getReplyTo(), replyProps, response.getBytes("UTF-8"));
-                        channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
-                       }
-                }
-                catch (RuntimeException e) {
-                    System.out.println(" [.] " + e.toString());
-                }
-            };
-            channel.basicConsume(SENDING_QUEUE, false, deliverCallback, (consumerTag -> { }));
-            while (true) {
-                synchronized (monitor) {
-                    try {
-                        monitor.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+    public void updateTicketStatus(int ticketId, Status newStatus) throws UnknownTicketException, IllegalStateException {
+        tickets.forEach((key, value) -> {
+            if (key == ticketId) {
+                value.setStatus(newStatus);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        });
+
+    }
+
+    @Override
+    public List<Ticket> getAllTickets() {
+        List<Ticket> noOfTickets = new ArrayList<>();
+        tickets.forEach((key, value) -> noOfTickets.add(value));
+        return noOfTickets;
     }
 }
