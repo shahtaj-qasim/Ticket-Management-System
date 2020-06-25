@@ -1,4 +1,4 @@
-# Introduction to Distributed Systems - Assignment Template
+
 
 ## General Information
 
@@ -31,6 +31,12 @@ Look at the dependencies block in the server/build.gradle.
 
 The _shared_ project is automatically included in the dependencies of the client and server.
 If you are interested inspect the `idistrsys/build.gradle` to see all the relevant settings, configurations and tasks.
+
+### Technologies:
+1. Java EE
+2. Gradle
+3. UDP 
+4. RabbitMQ
 
 ### Note:
 
